@@ -5,33 +5,46 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Random;
 
-public class Exponential extends AWorkload
+public class Exponential extends Workload
 {
-	private Random randomDouble;
-	private Double arrivalRate;
-	private Double serviceRate;
+	//rv = (((1/0.5)) * Math.log((double) 1-rand.uniform()))*-1;
+
 	
-	public Exponential(Double arrivalRate)
+	public Exponential(double arrivalRate, boolean service)
 	{
-		this.arrivalRate = arrivalRate;
-		randomDouble = new Random();
+		super(arrivalRate, service);
 	}
 	
-	
-	public void getTimes(int amountOfTimes, String fileName)
+	public void getTimes(int amountOfTimes)
 	{
-		try {
-			BufferedWriter writer = new BufferedWriter(new FileWriter(fileName));
-			
-			
-			
-			writer.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		double serviceTime;
+		this.allResults = new double[amountOfTimes];
+		
+		try
+		{
+			serviceTime = randomDouble.nextDouble();
+			this.allResults[0] = getResult(serviceTime);
 		}
-		
-		
+		catch(NullPointerException e)
+		{
+			System.err.println("No arrival amount given");
+			return;
+		}
+		for(int i = 1; i < this.allResults.length; i++)
+		{
+			serviceTime = randomDouble.nextDouble();
+			this.allResults[i] = getResult(serviceTime);
+			this.allResults[i] += this.allResults[i-1];
+		}
+	}		
+	
+
+	@Override
+	protected double getResult(double service) 
+	{
+		return (((1/this.arrivalRate)) * Math.log((double) 1-service))*-1;
 	}
+	
+	
 	
 }

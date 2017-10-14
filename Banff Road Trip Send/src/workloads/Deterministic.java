@@ -6,16 +6,15 @@ import java.io.IOException;
 
 import equalikely.Equalikely;
 
-public class Deterministic extends AWorkload
+public class Deterministic extends Workload
 {
-	private double arrival;
-	private double serviceTime;
-	private double lamda;
-	private Equalikely rand;
-	private BufferedWriter arrivalTimeWriter;
-	private BufferedWriter serviceTimeWriter;
+	public Deterministic(double arrivalRate, boolean service) {
+		super(arrivalRate, service);
+		// TODO Auto-generated constructor stub
+	}
+
 	
-	public Deterministic(double lamda, String arrivalTimeFile, String serviceTimeFile)
+/*	public Deterministic(double lamda, String arrivalTimeFile, String serviceTimeFile)
 	{
 		arrival = 0;
 		serviceTime = 1.5;
@@ -28,8 +27,8 @@ public class Deterministic extends AWorkload
 			e.printStackTrace();
 		}
 		
-	}
-	
+	}*/
+/*	
 	public void generateRandomTimes(int amountCars) throws IOException
 	{
 		if(amountCars > 0)
@@ -84,6 +83,25 @@ public class Deterministic extends AWorkload
 		
 		x = n-1;
 		return rv;
+	}*/
+
+
+	@Override
+	public void getTimes(int amountOfTimes) 
+	{
+		this.allResults = new double[amountOfTimes];
+		
+		for(int i = 0; i < this.allResults.length; i++)
+		{
+			
+		}
+	}
+
+
+	@Override
+	protected double getResult(double service) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 	
 }
