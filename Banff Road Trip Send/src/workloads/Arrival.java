@@ -7,11 +7,12 @@ public class Arrival extends Workload
 	public Arrival(double arrivalRate, boolean service) 
 	{
 		super(arrivalRate, service);
+		this.serviceRate = 1/this.serviceRate;
 	}
 
 	@Override
 	protected double getResult(double service) {
-		return (((1/this.arrivalRate)) * Math.log((double) 1-service))*-1;
+		return (((1/this.serviceRate)) * Math.log((double) 1-service))*-1;
 	}
 
 	@Override

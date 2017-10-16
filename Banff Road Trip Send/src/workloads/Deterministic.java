@@ -93,15 +93,14 @@ public class Deterministic extends Workload
 		
 		for(int i = 0; i < this.allResults.length; i++)
 		{
-			
+			this.allResults[i] = 1.5;
 		}
 	}
 
 
 	@Override
 	protected double getResult(double service) {
-		// TODO Auto-generated method stub
-		return 0;
+		return 1.5;
 	}
 	
 }

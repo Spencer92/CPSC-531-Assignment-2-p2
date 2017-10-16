@@ -17,13 +17,13 @@ public class Exponential extends Workload
 	
 	public void getTimes(int amountOfTimes)
 	{
-		double serviceTime;
+		double service;
 		this.allResults = new double[amountOfTimes];
 		
 		try
 		{
-			serviceTime = randomDouble.nextDouble();
-			this.allResults[0] = getResult(serviceTime);
+			service = randomDouble.nextDouble();
+			this.allResults[0] = getResult(service);
 		}
 		catch(NullPointerException e)
 		{
@@ -32,8 +32,8 @@ public class Exponential extends Workload
 		}
 		for(int i = 1; i < this.allResults.length; i++)
 		{
-			serviceTime = randomDouble.nextDouble();
-			this.allResults[i] = getResult(serviceTime);
+			service = randomDouble.nextDouble();
+			this.allResults[i] = getResult(service);
 			this.allResults[i] += this.allResults[i-1];
 		}
 	}		
@@ -42,7 +42,7 @@ public class Exponential extends Workload
 	@Override
 	protected double getResult(double service) 
 	{
-		return (((1/this.arrivalRate)) * Math.log((double) 1-service))*-1;
+		return (((1/this.serviceRate)) * Math.log((double) 1-service))*-1;
 	}
 	
 	

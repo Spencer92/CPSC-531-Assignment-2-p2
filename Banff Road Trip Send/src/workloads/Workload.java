@@ -8,21 +8,22 @@ import java.util.Random;
 public abstract class Workload 
 {
 	protected Random randomDouble;
-	protected double arrivalRate;
+	protected double serviceRate;
 	protected double allResults[];
 	protected boolean service;
 	
-	public Workload(double arrivalRate, boolean service)
+	public Workload(double serviceRate, boolean service)
 	{
 		randomDouble = new Random();
-		if(!service)
+		this.serviceRate = 1/serviceRate;
+		/*		if(!service)
 		{
 			this.arrivalRate = arrivalRate;
 		}
 		else
 		{
 			this.arrivalRate = 1/arrivalRate;
-		}
+		}*/
 		this.service = service;
 	}
 	
@@ -37,11 +38,11 @@ public abstract class Workload
 	
 	public void printResults(String fileName) throws IOException
 	{
-		BufferedWriter writer = new BufferedWriter(new FileWriter(fileName));
+		BufferedWriter writer = new BufferedWriter(new FileWriter("..\\" + fileName + ".txt"));
 		
-		for(int i = 0; i < allResults.length; i++)
+		for(int i = 0; i < this.allResults.length; i++)
 		{
-			writer.write(Double.toString(allResults[i]) + "\n");
+			writer.write(Double.toString(allResults[i]) + "\r\n");
 		}
 		
 		

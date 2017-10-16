@@ -19,6 +19,8 @@ public class HyperEx extends Workload
 	public void getTimes(int amountOfTimes) 
 	{
 		double serviceTime;
+		this.allResults = new double[amountOfTimes];
+		
 		try
 		{
 			if(randBool.nextBoolean())
@@ -62,7 +64,7 @@ public class HyperEx extends Workload
 	{
 //		if(randBool.nextBoolean() || !this.service)
 //		{
-			return (((1/this.arrivalRate)) * Math.log((double) 1-service))*-1;
+			return (((1/this.serviceRate)) * Math.log((double) 1-service))*-1;
 //		}
 //		else
 //		{
