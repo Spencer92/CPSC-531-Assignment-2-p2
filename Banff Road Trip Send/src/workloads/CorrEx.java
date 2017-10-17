@@ -14,7 +14,7 @@ public class CorrEx extends Workload
 	@Override
 	protected double getResult(double service) 
 	{
-		return (((1/this.serviceRate)) * Math.log((double) 1-service))*-1;
+		return (((1.0/this.serviceRate)) * Math.log((double) 1.0-service))*-1;
 	}
 	
 	public void getTimes(int amountOfTimes, double correlation)
@@ -46,13 +46,13 @@ public class CorrEx extends Workload
 			if(correlationRand.nextDouble() <= this.correlation)
 			{
 				this.allResults[i] = getResult(serviceTime);
-				this.allResults[i] += this.allResults[i-1];
+//				this.allResults[i] += this.allResults[i-1];
 			}
 			else
 			{
 				serviceTime = randomDouble.nextDouble();
 				this.allResults[i] = getResult(serviceTime);			
-				this.allResults[i] += this.allResults[i-1];
+//				this.allResults[i] += this.allResults[i-1];
 			}
 
 		}

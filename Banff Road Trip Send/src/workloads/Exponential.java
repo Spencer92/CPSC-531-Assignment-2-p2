@@ -34,7 +34,7 @@ public class Exponential extends Workload
 		{
 			service = randomDouble.nextDouble();
 			this.allResults[i] = getResult(service);
-			this.allResults[i] += this.allResults[i-1];
+//			this.allResults[i] += this.allResults[i-1];
 		}
 	}		
 	

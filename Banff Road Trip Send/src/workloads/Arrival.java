@@ -20,10 +20,15 @@ public class Arrival extends Workload
 	{
 		double service;
 		this.allResults = new double[amountOfTimes];
-		for(int i = 0; i < this.allResults.length; i++)
+		
+		service = this.randomDouble.nextDouble();
+		this.allResults[0] = getResult(service);
+		
+		for(int i = 1; i < this.allResults.length; i++)
 		{
 			service = this.randomDouble.nextDouble();
 			this.allResults[i] = getResult(service);
+			this.allResults[i] += this.allResults[i-1];
 		}
 	}
 

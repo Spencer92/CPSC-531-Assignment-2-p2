@@ -54,7 +54,7 @@ public class HyperEx extends Workload
 			}
 				
 			
-			this.allResults[i] += this.allResults[i-1];
+//			this.allResults[i] += this.allResults[i-1];
 			}
 
 	}
