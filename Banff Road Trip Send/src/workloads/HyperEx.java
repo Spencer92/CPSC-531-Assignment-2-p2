@@ -5,12 +5,12 @@ import java.util.Random;
 public class HyperEx extends Workload 
 {
 	private Random randBool;
-	private double arrivalRateSecondHalf;
+	private double serviceRateSecondHalf;
 	private Random randDoubleSecond;
-	public HyperEx(double arrivalRateFirstHalf, double arrivalRateSecondHalf, boolean service) 
+	public HyperEx(double serviceRateFirstHalf, double serviceRateSecondHalf, boolean service) 
 	{
-		super(arrivalRateFirstHalf, service);
-		this.arrivalRateSecondHalf = arrivalRateSecondHalf;
+		super(serviceRateFirstHalf, service);
+		this.serviceRateSecondHalf = 1/serviceRateSecondHalf;
 		randBool = new Random();
 		randDoubleSecond = new Random();
 	}
@@ -60,11 +60,11 @@ public class HyperEx extends Workload
 	}
 
 	@Override
-	protected double getResult(double service) 
+	protected double getResult(double randomNumber) 
 	{
 //		if(randBool.nextBoolean() || !this.service)
 //		{
-			return (((1/this.serviceRate)) * Math.log((double) 1-service))*-1;
+		return (((1/this.serviceRate)) * Math.log((double) 1-randomNumber))*-1;
 //		}
 //		else
 //		{
@@ -72,9 +72,9 @@ public class HyperEx extends Workload
 //		}
 	}
 	
-	private double getResultSecond(double service)
+	private double getResultSecond(double randomNumber)
 	{
-		return (((1/this.arrivalRateSecondHalf)) * Math.log((double) 1-service))*-1;
+		return (((1/this.serviceRateSecondHalf)) * Math.log((double) 1-randomNumber))*-1;
 	}
 
 }

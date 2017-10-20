@@ -40,9 +40,9 @@ public class Exponential extends Workload
 	
 
 	@Override
-	protected double getResult(double service) 
+	protected double getResult(double randomNumber) 
 	{
-		return (((1/this.serviceRate)) * Math.log((double) 1-service))*-1;
+		return (((1/this.serviceRate)) * Math.log((double) 1-randomNumber))*-1;
 	}
 	
 	
