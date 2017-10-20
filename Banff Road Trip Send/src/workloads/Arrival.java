@@ -3,31 +3,49 @@ package workloads;
 public class Arrival extends Workload
 {
 
-
-	public Arrival(double arrivalRate, boolean service) 
+	private double lambda;
+	public Arrival(double lambda) 
 	{
-		super(arrivalRate, service);
-		this.serviceRate = 1/this.serviceRate;
+		super(lambda);
+		this.lambda = 1/this.mean;
 	}
 
+	
+	/**
+	 * based on the formulat x = -(1/lambda ) * ln(1-u)
+	 * in order to generate a random result in an
+	 * exponential way
+	 * 
+	 */
+
+	
 	@Override
-	protected double getResult(double service) {
-		return (((1/this.serviceRate)) * Math.log((double) 1-service))*-1;
+	protected double getResult(double randomNumber) {
+		return (((1.0/this.lambda)) * Math.log((double) 1-randomNumber))*-1;
 	}
 
+	
+	/**
+	 * This is for the arrival times, it is similar
+	 * to how all the other times are generated, but
+	 * each time the number adds up, instead of
+	 * every number being (relatively) independent 
+	 * of each other
+	 */
+	
 	@Override
 	public void getTimes(int amountOfTimes)
 	{
-		double service;
+		double randomNumber;
 		this.allResults = new double[amountOfTimes];
 		
-		service = this.randomDouble.nextDouble();
-		this.allResults[0] = getResult(service);
+		randomNumber = this.randomDouble.nextDouble();
+		this.allResults[0] = getResult(randomNumber);
 		
 		for(int i = 1; i < this.allResults.length; i++)
 		{
-			service = this.randomDouble.nextDouble();
-			this.allResults[i] = getResult(service);
+			randomNumber = this.randomDouble.nextDouble();
+			this.allResults[i] = getResult(randomNumber);
 			this.allResults[i] += this.allResults[i-1];
 		}
 	}

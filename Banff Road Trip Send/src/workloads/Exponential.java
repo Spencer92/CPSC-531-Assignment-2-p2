@@ -10,39 +10,45 @@ public class Exponential extends Workload
 	//rv = (((1/0.5)) * Math.log((double) 1-rand.uniform()))*-1;
 
 	
-	public Exponential(double arrivalRate, boolean service)
+	public Exponential(double mean)
 	{
-		super(arrivalRate, service);
+		super(mean);
 	}
+	
+	/**
+	 * To generate random numbers in an exponential 
+	 * way, the formula x = -(1/lambda ) * ln(1-u) is used
+	 * 
+	 * where x is the result, lambda     is the mean, and u is a random
+	 * number between 0 and 1 
+	 * 
+	 */
 	
 	public void getTimes(int amountOfTimes)
 	{
 		double service;
 		this.allResults = new double[amountOfTimes];
 		
-		try
-		{
-			service = randomDouble.nextDouble();
-			this.allResults[0] = getResult(service);
-		}
-		catch(NullPointerException e)
-		{
-			System.err.println("No arrival amount given");
-			return;
-		}
-		for(int i = 1; i < this.allResults.length; i++)
+		for(int i = 0; i < this.allResults.length; i++)
 		{
 			service = randomDouble.nextDouble();
 			this.allResults[i] = getResult(service);
-//			this.allResults[i] += this.allResults[i-1];
 		}
 	}		
 	
 
+	/**
+	 * based on the formulat x = -(1/lambda ) * ln(1-u)
+	 * in order to generate a random result in an
+	 * exponential way
+	 * 
+	 */
+
+	
 	@Override
 	protected double getResult(double randomNumber) 
 	{
-		return (((1/this.serviceRate)) * Math.log((double) 1-randomNumber))*-1;
+		return (((1/this.mean)) * Math.log((double) 1-randomNumber))*-1;
 	}
 	
 	

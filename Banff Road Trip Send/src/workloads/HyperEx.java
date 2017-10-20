@@ -5,42 +5,43 @@ import java.util.Random;
 public class HyperEx extends Workload 
 {
 	private Random randBool;
-	private double serviceRateSecondHalf;
+	private double meanTwo;
 	private Random randDoubleSecond;
-	public HyperEx(double serviceRateFirstHalf, double serviceRateSecondHalf, boolean service) 
+	
+	/**
+	 * Because the mean isn't consistant, two service rates are needed
+	 * 
+	 * 
+	 * @param meanOne
+	 * @param meanTwo
+	 */
+	public HyperEx(double meanOne, double meanTwo) 
 	{
-		super(serviceRateFirstHalf, service);
-		this.serviceRateSecondHalf = 1/serviceRateSecondHalf;
+		super(meanOne);
+		this.meanTwo = 1/meanTwo;
 		randBool = new Random();
 		randDoubleSecond = new Random();
 	}
+	
+	
+	/**
+	 * To generate random numbers in an Hyper Exponential way
+	 * 
+	 * There's two separate means that are used, with two
+	 * different seeds. Each time there's a 50 percent
+	 * chance that one number will be generated assuming
+	 * the mean is 1.0, and another assuming the mean
+	 * is 2.0
+	 * 
+	 */
 
 	@Override
-	public void getTimes(int amountOfTimes) 
+	public void getTimes(int numbersToGenerate) 
 	{
 		double serviceTime;
-		this.allResults = new double[amountOfTimes];
-		
-		try
-		{
-			if(randBool.nextBoolean())
-			{
-				serviceTime = randomDouble.nextDouble();
-				this.allResults[0] = getResult(serviceTime);
-			}
-			else
-			{
-				serviceTime = randDoubleSecond.nextDouble();
-				this.allResults[0] = getResultSecond(serviceTime);
-			}	
-			
-		}
-		catch(NullPointerException e)
-		{
-			System.err.println("No value given");
-			return;
-		}
-		for(int i = 1; i < this.allResults.length; i++)
+		this.allResults = new double[numbersToGenerate];
+
+		for(int i = 0; i < this.allResults.length; i++)
 		{
 			if(randBool.nextBoolean())
 			{
@@ -52,29 +53,37 @@ public class HyperEx extends Workload
 				serviceTime = randDoubleSecond.nextDouble();
 				this.allResults[i] = getResultSecond(serviceTime);
 			}
-				
-			
-//			this.allResults[i] += this.allResults[i-1];
-			}
+	
+		}
 
 	}
 
+
+	/**
+	 * based on the formulat x = -(1/lambda ) * ln(1-u)
+	 * in order to generate a random result in an
+	 * exponential way
+	 * 
+	 */
+	
 	@Override
 	protected double getResult(double randomNumber) 
 	{
-//		if(randBool.nextBoolean() || !this.service)
-//		{
-		return (((1/this.serviceRate)) * Math.log((double) 1-randomNumber))*-1;
-//		}
-//		else
-//		{
-//			return (((1/this.arrivalRateSecondHalf)) * Math.log((double) 1-service))*-1;
-//		}
+		//mean is the first mean
+		return (((1/this.mean)) * Math.log((double) 1-randomNumber))*-1;
 	}
+
+	/**
+	 * based on the formulat x = -(1/lambda ) * ln(1-u)
+	 * in order to generate a random result in an
+	 * exponential way
+	 * 
+	 */
+
 	
 	private double getResultSecond(double randomNumber)
 	{
-		return (((1/this.serviceRateSecondHalf)) * Math.log((double) 1-randomNumber))*-1;
+		return (((1/this.meanTwo)) * Math.log((double) 1-randomNumber))*-1;
 	}
 
 }

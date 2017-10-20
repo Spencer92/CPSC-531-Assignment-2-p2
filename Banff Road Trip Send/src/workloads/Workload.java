@@ -8,33 +8,30 @@ import java.util.Random;
 public abstract class Workload 
 {
 	protected Random randomDouble;
-	protected double serviceRate;
+	protected double mean;
 	protected double allResults[];
-	protected boolean service;
 	
-	public Workload(double serviceRate, boolean service)
+	public Workload(double mean)
 	{
 		randomDouble = new Random();
-		this.serviceRate = 1/serviceRate;
-		/*		if(!service)
-		{
-			this.arrivalRate = arrivalRate;
-		}
-		else
-		{
-			this.arrivalRate = 1/arrivalRate;
-		}*/
-		this.service = service;
+		this.mean = 1/mean;
 	}
 	
-	protected abstract double getResult(double service);
+	protected abstract double getResult(double randomNumber);
 	
-/*	protected double getResult(double service)
-	{
-		return (((1/this.arrivalRate)) * Math.log((double) 1-service))*-1;
-	}*/
+	/**
+	 * This function generates a random amount of numbers
+	 * based on the formula x = -(1/lambda ) * ln(1-u)
+	 * 
+	 * where x is the result, lambda is the mean, and u is a random
+	 * number between 0 and 1 
+	 * 
+	 * @param numbersToGenerate how many numbers are being generated
+	 */
 	
-	public abstract void getTimes(int amountOfTimes);
+	public abstract void getTimes(int numbersToGenerate);
+	
+	
 	
 	public void printResults(String fileName) throws IOException
 	{
